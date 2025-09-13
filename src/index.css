@@ -1,0 +1,382 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Enhanced Theme Variables */
+:root {
+  --primary: rgb(59 130 246);
+  --primary-dark: rgb(30 64 175);
+  --accent: rgb(6 182 212);
+  --accent-dark: rgb(14 116 144);
+  --transition-duration: 300ms;
+  --animation-scale: 1;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-duration: 0ms;
+    --animation-scale: 0;
+  }
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --tw-ring-color: #000000;
+  filter: contrast(1.5);
+}
+
+.high-contrast .bg-white {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.high-contrast .dark\:bg-slate-800 {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Enhanced Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--primary);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* Enhanced Button Interactions */
+button {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:not(.reduce-motion):hover {
+  transform: translateY(-2px) scale(calc(1 + var(--animation-scale) * 0.02));
+}
+
+button:not(.reduce-motion):active {
+  transform: translateY(0) scale(calc(1 - var(--animation-scale) * 0.02));
+}
+
+/* Ripple Effect */
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:not(.reduce-motion):active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:not(.reduce-motion):hover {
+  transform: translateY(-4px) scale(calc(1 + var(--animation-scale) * 0.03));
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Enhanced Loading Animation */
+.loading-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Theme Color Animations */
+[data-animations="true"] .theme-transition {
+  transition: color var(--transition-duration) ease,
+              background-color var(--transition-duration) ease,
+              border-color var(--transition-duration) ease,
+              box-shadow var(--transition-duration) ease;
+}
+
+/* Enhanced Modal Animations */
+.modal-backdrop {
+  animation: fade-in 0.3s ease-out;
+}
+
+.modal-content {
+  animation: slide-in-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Color Scheme Specific Animations */
+[data-color-scheme="blue"] .scheme-animation {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: calc(var(--animation-scale) * 0.5s);
+}
+
+[data-color-scheme="green"] .scheme-animation {
+  animation: pulse-glow 2s ease-in-out infinite;
+  animation-delay: calc(var(--animation-scale) * 0.3s);
+}
+
+[data-color-scheme="purple"] .scheme-animation {
+  animation: bounce-in 0.6s ease-out;
+  animation-delay: calc(var(--animation-scale) * 0.2s);
+}
+
+[data-color-scheme="orange"] .scheme-animation {
+  animation: slide-in-right 0.5s ease-out;
+  animation-delay: calc(var(--animation-scale) * 0.1s);
+}
+
+[data-color-scheme="red"] .scheme-animation {
+  animation: shake 0.5s ease-in-out;
+  animation-delay: calc(var(--animation-scale) * 0.4s);
+}
+
+/* Tab Indicator Animation */
+.tab-indicator {
+  position: relative;
+}
+
+.tab-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-duration) ease;
+}
+
+.tab-indicator.active::after {
+  transform: scaleX(1);
+}
+
+/* Enhanced Focus States for Accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.high-contrast button:focus-visible,
+.high-contrast input:focus-visible,
+.high-contrast select:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+  transition: background var(--transition-duration) ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Enhanced Error States */
+.error-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Success Animation */
+.success-bounce {
+  animation: bounce-in 0.6s ease-out;
+}
+
+/* Data Grid Enhancements */
+.data-row {
+  transition: all var(--transition-duration) ease;
+}
+
+.data-row:not(.reduce-motion):hover {
+  background-color: rgba(59, 130, 246, 0.05);
+  transform: scale(calc(1 + var(--animation-scale) * 0.01));
+}
+
+/* Settings Panel Animations */
+.settings-item {
+  transition: all var(--transition-duration) ease;
+}
+
+.settings-item:not(.reduce-motion):hover {
+  transform: translateX(4px);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Color Picker Dots */
+.color-dot {
+  transition: all var(--transition-duration) ease;
+  position: relative;
+}
+
+.color-dot:not(.reduce-motion):hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: border-color var(--transition-duration) ease;
+}
+
+.color-dot.active::after {
+  border-color: var(--primary);
+}
+
+/* Keyboard Shortcut Indicators */
+.kbd-hint {
+  background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),
+              inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+  transition: all var(--transition-duration) ease;
+}
+
+.dark .kbd-hint {
+  background: linear-gradient(145deg, #374151, #4b5563);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+              inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Tooltip Enhancements */
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0;
+  animation: fade-in 0.3s ease forwards;
+}
+
+/* Progress Indicators */
+.progress-bar {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  height: 4px;
+  border-radius: 2px;
+  transition: width var(--transition-duration) ease;
+}
+
+/* Enhanced Alert Animations */
+.alert-enter {
+  animation: slide-in-right 0.5s ease-out;
+}
+
+.alert-exit {
+  animation: slide-out-right 0.3s ease-in forwards;
+}
+
+@keyframes slide-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Theme Preview Animation */
+.theme-preview {
+  transition: all var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-preview:not(.reduce-motion):hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
